@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour {
 	public float divspeed=0.3f;
 	
 	public bool senoide;
-	public senoideSettings senoideSettings;
+	public SenoideSettings senoideSettings;
 //	public float amplitude;
 //	public float omega;
 //	public float phase;
@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
 	public float rotSpeed;
 	
 	public bool shoot;
-	public shotSettings shotSettings;
+	public ShotSettings shotSettings;
 //	public GameObject[] canones=new GameObject[1];
 //	public bool DoLastAction;
 //	public LastAction lastAction;
@@ -46,10 +46,10 @@ public class Bullet : MonoBehaviour {
 	
 //	public bool PointAndGo=false;
 //	public bool Seek=false;
-	public specialSettings SpecialSettings;
+	public SpecialSettings SpecialSettings;
 	public string targetTag;
 	public bool isRocket=false;
-	public rocketSettings rocketSettings;
+	public RocketSettings rocketSettings;
 //	public bool isRocket=false;
 //	public GameObject igition;
 //	public float turnBoostRadio=5f;
@@ -139,11 +139,11 @@ public class Bullet : MonoBehaviour {
 					}
 					if(shotSettings.canones[shotSettings.canones.Length-1]==null)
 					{
-						if(shotSettings.lastAction==shotSettings.LastAction.SelfDestroy)
+						if(shotSettings.lastAction==ShotSettings.LastAction.SelfDestroy)
 						{
 							Destroy(this.gameObject);
 						}
-						else if(shotSettings.lastAction==shotSettings.LastAction.ChangeSpeed)
+						else if(shotSettings.lastAction==ShotSettings.LastAction.ChangeSpeed)
 						{
 							speed=shotSettings.lastActionSpeed;
 							action=false;
@@ -190,7 +190,7 @@ public class Bullet : MonoBehaviour {
 					{
 						rotSpeed+=Vector3.Distance(_transform.position,(target.transform.position-_transform.position));
 					}
-					orientation=Mathf.LerpAngle(orientation,calculateEnemyDirection(),rotSpeed*Time.deltaTime);
+					orientation=Mathf.LerpAngle(orientation,CalculateEnemyDirection(),rotSpeed*Time.deltaTime);
 					
 				}
 			}
@@ -286,15 +286,12 @@ public class Bullet : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.tag=="enemy")
-		{
-			other.SendMessage("GetDamage",damage);
-			if(canDestroid)
-				destroy ();
-		}
+        other.gameObject.gameObject.SendMessage("GetDamage",damage,SendMessageOptions.DontRequireReceiver);
+	    if(canDestroid)
+            Destroy ();
 	}
 	
-	public void destroy()
+    public void Destroy()
 	{
 		if(CollisionFX)
 		{
@@ -303,7 +300,7 @@ public class Bullet : MonoBehaviour {
 		Destroy(this.gameObject);
 	}
 	
-	private float calculateEnemyDirection()
+	private float CalculateEnemyDirection()
 	{
 		if(target)
 		{
@@ -323,36 +320,33 @@ public class Bullet : MonoBehaviour {
 		GameObject[] gob=GameObject.FindGameObjectsWithTag(tag);
 		if(gob.Length>0)
 		{
-		GameObject closest=gob[0];
-		float distance=Mathf.Infinity;
-		Vector3 position=_transform.position;
-		for(int i=0;i<gob.Length;i++)
-		{
-			Vector3 diff=gob[i].transform.position-position;
-			float currentdist=diff.sqrMagnitude;
-			if(currentdist <distance)
-			{
-				closest=gob[i];
-				distance=currentdist;
-			}
+    		GameObject closest=gob[0];
+    		float distance=Mathf.Infinity;
+    		Vector3 position=_transform.position;
+    		for(int i=0;i<gob.Length;i++)
+    		{
+    			Vector3 diff=gob[i].transform.position-position;
+    			float currentdist=diff.sqrMagnitude;
+    			if(currentdist <distance)
+    			{
+    				closest=gob[i];
+    				distance=currentdist;
+    			}
+    		}
+		    return(closest);
 		}
-		return(closest);
-		}
-		else
-		{
-			return(null);
-		}
+		return(null);
 	}
 }
 [System.Serializable]
-public class senoideSettings:System.Object
+public class SenoideSettings:System.Object
 {
 	public float amplitude;
 	public float omega;
 	public float phase;
 }
 [System.Serializable]
-public class shotSettings:System.Object
+public class ShotSettings:System.Object
 {
 	public GameObject[] canones=new GameObject[1];
 	public bool DoLastAction;
@@ -370,20 +364,20 @@ public class ShwandCSettings:System.Object
 	public float SmothShow=0.3f;
 }
 [System.Serializable]
-public class rocketSettings:System.Object
+public class RocketSettings:System.Object
 {
 	public GameObject igition;
 	public float turnBoostRadio=5f;
 	public float launchSpeed;
 	public float ignitionTime;
-	public bool ignitionDone=false;
+	public bool ignitionDone;
 }
 [System.Serializable]
-public class specialSettings:System.Object
+public class SpecialSettings:System.Object
 {
-	public bool DirectionalRot=false;
-	public bool DirectionalMove=false;
-	public bool PointAndGo=false;
-	public bool Seek=false;
+	public bool DirectionalRot;
+	public bool DirectionalMove;
+	public bool PointAndGo;
+	public bool Seek;
 }
 
