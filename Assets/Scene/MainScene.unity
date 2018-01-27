@@ -331,7 +331,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1337277945
+  randomSeed: -1079026411
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3955,8 +3955,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1494364594102366, guid: d990cd585c3f6475494f13d12de98f06, type: 2}
   FireRate: 0.1
-  presition: 0
-  knockBackAmount: 0
+  presition: 0.877
+  knockBackAmount: 11.5
   movementSpeed: 0.5
   BulletQuantityByShot: 1
   cantidadDisparos: 0
