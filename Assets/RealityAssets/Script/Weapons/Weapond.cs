@@ -15,7 +15,8 @@ public class Weapond : MonoBehaviour, IWeapond
     }
 
 	public GameObject bullet;
-	public float FireRate=0.5f;
+    public GameObject Particles;
+    public float FireRate=0.5f;
     [Range(0,1)]
     public float presition;
     [Range(0,100)]
@@ -49,6 +50,8 @@ public class Weapond : MonoBehaviour, IWeapond
                 float noiseAmount = noise * 13;
                 Vector3 InstanceOrigin = new Vector3(transform.position.x + (Random.Range(0,noiseAmount)), transform.position.y + Random.Range(0, noiseAmount), transform.position.z);
                 BulletInst=Instantiate(bullet,InstanceOrigin,this.transform.rotation) as GameObject as GameObject;
+                var effect = Instantiate(Particles, InstanceOrigin, transform.rotation);
+                effect.transform.eulerAngles += new Vector3(90, 0, 0);
                 BulletInst.transform.localScale += Vector3.one * noise * 2;
                 count++;
 				

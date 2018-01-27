@@ -9,7 +9,7 @@ Material:
   m_Name: NavyGrid
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _EMISSIONMAP _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _LIGHTMAPPING_REALTIME
-    _UVSEC_UV1
+    _NORMALMAP _UVSEC_UV1
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c546679b0cc642c42b1c973c2a1ed14c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -37,12 +37,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 2800000, guid: a196fd6788131ec459bfb26012466fc1, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 0.27, y: 0.23}
+        m_Offset: {x: -0.12, y: -0.25}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 86e4aa9207c9e2740b6ace599d659c05, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 45d9d5478bd90c545bd989b20c97bca4, type: 3}
+        m_Scale: {x: 0.27, y: 0.23}
+        m_Offset: {x: -0.12, y: -0.25}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -70,11 +70,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionScaleUI: 2
-    - _GlossMapScale: 1
-    - _Glossiness: 0.1
+    - _GlossMapScale: 0.421
+    - _Glossiness: 0.575
     - _GlossyReflections: 1
     - _Lightmapping: 1
-    - _Metallic: 0.1
+    - _Metallic: 0.587
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
