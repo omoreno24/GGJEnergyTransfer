@@ -44,7 +44,7 @@ public class Weapond : MonoBehaviour, IWeapond
 		{
 			
             NextFire= Time.time+FireRate;
-			for(int i=0;i<BulletQuantityByShot;i++)
+			for(int i=0; i < BulletQuantityByShot; i++)
 			{
                 float noise = (Random.value - Random.value) * (1 - presition);
                 float noiseAmount = noise * 13;

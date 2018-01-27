@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class instantiateTest : MonoBehaviour {
 	public GameObject instance;
+    public GameObject PlayerLeft;
+    public GameObject PlayerRight;
+    public int MaxEnemyCount = 10;
 	public float FireRate=0.5f;
 	public float nextFire=0.0f;
 	public GameObject[] enemies;
@@ -10,6 +14,7 @@ public class instantiateTest : MonoBehaviour {
 	float choice;
 	public float[] posibility;
     public string Idirection = "";
+    public List<GameObject> InstanceList = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
 	posibility=new float[enemies.Length];
@@ -36,13 +41,29 @@ public class instantiateTest : MonoBehaviour {
 				}
 			}
 			//instance=enemies[Random.Range(0,enemies.Length-1)];
-
-			GameObject instanced=Instantiate(instance,Position,transform.rotation)as GameObject as GameObject;
+            if(InstanceList.Count < MaxEnemyCount)
+            {
+                BaseEnemy instanced = Instantiate(instance, Position, transform.rotation).GetComponent<BaseEnemy>();
+                InstanceList.Add(instanced.gameObject);
+                if (Idirection == "Left" && instanced != null)
+                {
+                    instanced.Target = PlayerLeft.transform;
+                }
+                else if (instanced != null && Idirection == "Right")
+                {
+                    instanced.Target = PlayerRight.transform;
+                }    
+            }
+            else{
+                InstanceList.RemoveAll(item=>item==null);
+            }
 		}
 	}
 	public Vector3 getRandomPos()
 	{
-		Vector3 CamPoint;
+
+        return transform.position + new Vector3(transform.position.x * (Random.value - Random.value), transform.position.y * (Random.value - Random.value), transform.position.z * (Random.value - Random.value));
+        /*Vector3 CamPoint;
 		float width=0;
 		float height=0;
 		float[] posibility={75,0};
@@ -73,7 +94,7 @@ public class instantiateTest : MonoBehaviour {
 				direction=Camera.main.ScreenToWorldPoint(new Vector3(20,Screen.height/2,Camera.main.WorldToScreenPoint(transform.position).z));
 			
 		}
-		return InstancePos;
+		return InstancePos;*/
 	}
 	 public static float getChoice(float[] items)
    	 {

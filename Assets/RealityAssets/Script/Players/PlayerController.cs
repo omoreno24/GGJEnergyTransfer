@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
         public ParticleSystem transmission;
         public Transform OtherHead;
         public SmoothFollow trailRenderl;
-
+        public int TimeToPass = 5;
         public float MinDistance;
         public GameObject Glow;
         public IWeapond GetWeapond()
@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour {
 
     void Start () {
         movementController = gameObject.GetComponent<IPlayerLocomotion>();
+        if(CanShot)
+            StartCoroutine(PowerTiming());
 	}
 	
 	void Update () {
@@ -77,5 +79,17 @@ public class PlayerController : MonoBehaviour {
 
         properties.Glow.SetActive(true);
         CanShot = true;
+        StartCoroutine(PowerTiming());
+    }
+    IEnumerator PowerTiming()
+    {
+        int CountDown = properties.TimeToPass;
+        while(CountDown > 0)
+        {
+            yield return new WaitForSeconds(1);
+            CountDown--;
+        }
+        if (CanShot)
+            Debug.Log("Player Death");
     }
 }

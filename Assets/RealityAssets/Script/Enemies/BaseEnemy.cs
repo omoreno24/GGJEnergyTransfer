@@ -12,15 +12,16 @@ public class BaseEnemy : Monohelper {
 	// Use this for initialization
 	void Start () {
         Agent = GetComponent<NavMeshAgent>();
-        Target = player.transform;
         StartCoroutine(IAUpdate());
 	}
 	
     IEnumerator IAUpdate () {
         do
         {
+            if(Target!=null && Agent.isOnNavMesh)
+                Agent.SetDestination(Target.position);
+
             yield return new WaitForSeconds(SleepTime);
-            Agent.SetDestination(Target.position);
         } while (true);
 	}
 
@@ -36,16 +37,12 @@ public class BaseEnemy : Monohelper {
     {
         Debug.Log((other.name));
         if(other.CompareTag("Bullet")){
-
-            Die();
-            /*
             Debug.Log("triggerrr");
             Bullet bullet = other.GetComponent<Bullet>();
             TakeDamage(bullet);
             Vector3 dir = other.transform.position - transform.position;
             dir.Normalize();
             KnockBack(dir);
-            */
         }
     }
     void KnockBack(Vector3 direction){
@@ -53,6 +50,7 @@ public class BaseEnemy : Monohelper {
     }
 
     void Die(){
+        shaker.ShakeOneShot(1.5f);
         Destroy(this.gameObject);
     }
 

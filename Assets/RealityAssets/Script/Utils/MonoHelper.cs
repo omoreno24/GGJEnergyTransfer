@@ -13,4 +13,15 @@ public class Monohelper : MonoBehaviour
         }
     }
     private static PlayerController _player;
+
+    public CameeraShake shaker
+    {
+        get
+        {
+            if (_shaker == null)
+                _shaker = FindObjectOfType<CameeraShake>();
+            return _shaker;
+        }
+    }
+    private static CameeraShake _shaker;
 }
