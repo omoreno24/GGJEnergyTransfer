@@ -1,4 +1,5 @@
 public class NoWeapond : IWeapond
 {
-    public void Shoot() { }
+    public float Shoot() { return 0; }
+    public float GetMovementLost() { return 0; }
 };

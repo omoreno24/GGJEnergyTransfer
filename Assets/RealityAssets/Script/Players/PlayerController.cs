@@ -5,7 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     [System.Serializable]
     public class PlayerProperties{
+        public string HorizontalInput;
+        public string VerticalInput;
+        public string TransmitButton;
         public GameObject CurrentWeapond;
+        public ParticleSystem transmission;
+        public float MinDistance;
+        public GameObject Glow;
         public IWeapond GetWeapond()
         {
             if (CurrentWeapond != null)
@@ -15,14 +21,54 @@ public class PlayerController : MonoBehaviour {
         }
     }
     public PlayerProperties properties;
-	// Use this for initialization
-	void Start () {
-		
+    public Transform otherPlayer;
+    public bool CanShot;
+    float NockBackValue;
+    IPlayerLocomotion movementController;
+
+    void Start () {
+        movementController = gameObject.GetComponent<IPlayerLocomotion>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        if (Input.GetButton("Fire1"))
-            properties.GetWeapond().Shoot();
+
+        Vector3 motion = new Vector3(Input.GetAxis(properties.HorizontalInput), 0, Input.GetAxis(properties.VerticalInput));
+
+        if (CanShot && Input.GetButton("Fire1")){
+            NockBackValue = properties.GetWeapond().Shoot();
+            movementController.AddImpact(-transform.forward,NockBackValue);
+            motion -= motion * properties.GetWeapond().GetMovementLost();
+        }
+        movementController.Move(motion);
+
+        if (Input.GetButton(properties.TransmitButton) && CanShot)
+        {
+            //Debug.Log(Vector3.Distance(transform.localPosition, otherPlater.localPosition));
+            TransmitPower();
+
+            if (Vector3.Distance(transform.position, otherPlayer.position) < properties.MinDistance)
+            {
+                CanShot = false;
+                properties.Glow.SetActive(false);
+                otherPlayer.gameObject.SendMessage("RecivePower", SendMessageOptions.RequireReceiver);
+            }
+        }
 	}
+ 
+    public void TransmitPower()
+    {
+        if (!properties.transmission.isPlaying)
+            properties.transmission.Play();
+    }
+
+    public void RecivePower()
+    {
+        /*
+        if (!transmission.isPlaying)
+            transmission.Play();
+            */
+
+        properties.Glow.SetActive(true);
+        CanShot = true;
+    }
 }

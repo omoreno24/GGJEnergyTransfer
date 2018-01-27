@@ -16,6 +16,12 @@ public class Weapond : MonoBehaviour, IWeapond
 
 	public GameObject bullet;
 	public float FireRate=0.5f;
+    [Range(0,1)]
+    public float presition;
+    [Range(0,100)]
+    public float knockBackAmount = 0;
+    [Range(0,1)]
+    public float movementSpeed = 0.5f;
     public int BulletQuantityByShot=3;
 	public int cantidadDisparos;//0=infinito;
 	int count=0;
@@ -25,7 +31,7 @@ public class Weapond : MonoBehaviour, IWeapond
     private GameObject BulletInst;
     private int shootcount;
 
-	public void Shoot()
+	public float Shoot()
 	{
         publicCount = shootcount;
 
@@ -33,14 +39,18 @@ public class Weapond : MonoBehaviour, IWeapond
 		{
 			mc=1;
 		}
-        if(Time.time>NextFire  && shootcount<=cantidadDisparos)
+        if(Time.time > NextFire  && shootcount <= cantidadDisparos)
 		{
 			
             NextFire= Time.time+FireRate;
 			for(int i=0;i<BulletQuantityByShot;i++)
 			{
-				BulletInst=Instantiate(bullet,new Vector3(transform.position.x,transform.position.y,transform.position.z),this.transform.rotation)as GameObject as GameObject;
-				count++;
+                float noise = (Random.value - Random.value) * (1 - presition);
+                float noiseAmount = noise * 13;
+                Vector3 InstanceOrigin = new Vector3(transform.position.x + (Random.Range(0,noiseAmount)), transform.position.y + Random.Range(0, noiseAmount), transform.position.z);
+                BulletInst=Instantiate(bullet,InstanceOrigin,this.transform.rotation) as GameObject as GameObject;
+                BulletInst.transform.localScale += Vector3.one * noise * 2;
+                count++;
 				
 				if(count>mc)
 				{
@@ -54,6 +64,7 @@ public class Weapond : MonoBehaviour, IWeapond
 				{
 					BulletInst.tag="instanced"+count;
 				}*/
+                return Random.Range(knockBackAmount, knockBackAmount*4);
 			}
 			count=0;
 			
@@ -66,5 +77,10 @@ public class Weapond : MonoBehaviour, IWeapond
 				shootcount++;
 			}
 		}
+        return 0;
 	}
+    public float GetMovementLost()
+    {
+        return movementSpeed;
+    }
 }

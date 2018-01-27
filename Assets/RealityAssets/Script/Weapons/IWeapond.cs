@@ -3,5 +3,6 @@ using System.Collections;
 
 public interface IWeapond
 {
-    void Shoot();
+    float Shoot();
+    float GetMovementLost();
 }
