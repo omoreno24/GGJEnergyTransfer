@@ -337,6 +337,14 @@ public class Bullet : MonoBehaviour {
 		}
 		return(null);
 	}
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
 [System.Serializable]
 public class SenoideSettings:System.Object

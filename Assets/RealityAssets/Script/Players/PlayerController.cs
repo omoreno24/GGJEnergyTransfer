@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 public class PlayerController : MonoBehaviour {
     [System.Serializable]
@@ -8,8 +9,12 @@ public class PlayerController : MonoBehaviour {
         public string HorizontalInput;
         public string VerticalInput;
         public string TransmitButton;
+        public string ShootButton;
         public GameObject CurrentWeapond;
         public ParticleSystem transmission;
+        public Transform OtherHead;
+        public SmoothFollow trailRenderl;
+
         public float MinDistance;
         public GameObject Glow;
         public IWeapond GetWeapond()
@@ -24,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     public Transform otherPlayer;
     public bool CanShot;
     float NockBackValue;
+
     IPlayerLocomotion movementController;
 
     void Start () {
@@ -34,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 
         Vector3 motion = new Vector3(Input.GetAxis(properties.HorizontalInput), 0, Input.GetAxis(properties.VerticalInput));
 
-        if (CanShot && Input.GetButton("Fire1")){
+        if (CanShot && Input.GetButton(properties.ShootButton)){
             NockBackValue = properties.GetWeapond().Shoot();
             movementController.AddImpact(-transform.forward,NockBackValue);
             motion -= motion * properties.GetWeapond().GetMovementLost();
@@ -51,6 +57,7 @@ public class PlayerController : MonoBehaviour {
                 CanShot = false;
                 properties.Glow.SetActive(false);
                 otherPlayer.gameObject.SendMessage("RecivePower", SendMessageOptions.RequireReceiver);
+                properties.trailRenderl.SetTarget(properties.OtherHead);
             }
         }
 	}
