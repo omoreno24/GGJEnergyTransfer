@@ -25,6 +25,7 @@ public class Weapond : MonoBehaviour, IWeapond
     public float movementSpeed = 0.5f;
     public int BulletQuantityByShot=3;
 	public int cantidadDisparos;//0=infinito;
+    public AudioSource AudioSource;
 	int count=0;
 	int mc=2;
 	public int publicCount;
@@ -32,7 +33,11 @@ public class Weapond : MonoBehaviour, IWeapond
     private GameObject BulletInst;
     private int shootcount;
 
-	public float Shoot()
+    private void Start()
+    {
+        AudioSource = GetComponent<AudioSource>();
+    }
+    public float Shoot()
 	{
         publicCount = shootcount;
 
@@ -50,6 +55,7 @@ public class Weapond : MonoBehaviour, IWeapond
                 float noiseAmount = noise * 13;
                 Vector3 InstanceOrigin = new Vector3(transform.position.x + (Random.Range(0,noiseAmount)), transform.position.y + Random.Range(0, noiseAmount), transform.position.z);
                 BulletInst=Instantiate(bullet,InstanceOrigin,this.transform.rotation) as GameObject as GameObject;
+                AudioSource.Play();
                 var effect = Instantiate(Particles, InstanceOrigin, transform.rotation);
                 effect.transform.eulerAngles += new Vector3(90, 0, 0);
                 BulletInst.transform.localScale += Vector3.one * noise * 2;

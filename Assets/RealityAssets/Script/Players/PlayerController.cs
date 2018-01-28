@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Utility;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Monohelper{
     [System.Serializable]
     public class PlayerProperties{
-        public int HealthPoints = 100;
+        public float HealthPoints = 100;
 
         public string HorizontalInput;
         public string VerticalInput;
@@ -20,7 +20,10 @@ public class PlayerController : MonoBehaviour {
         public float MinDistance;
         public GameObject Glow;
         public GameObject Explosion;
-
+        public AudioClip WalkClip;
+        public AudioClip TransitionClip;
+        public AudioSource FX;
+        public AudioSource FX2;
 
         public IWeapond GetWeapond()
         {
@@ -51,7 +54,9 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         if (GameOver) return;
         Vector3 motion = new Vector3(Input.GetAxis(properties.HorizontalInput), 0, Input.GetAxis(properties.VerticalInput));
-
+        if(motion != Vector3.zero && !properties.FX.isPlaying)
+            properties.FX.PlayOneShot(properties.WalkClip,0.2f);
+        
         if (CanShot && Input.GetButton(properties.ShootButton)){
             NockBackValue = properties.GetWeapond().Shoot();
             movementController.AddImpact(-transform.forward,NockBackValue);
@@ -76,17 +81,24 @@ public class PlayerController : MonoBehaviour {
 
         if(properties.HealthPoints <= 0 && GameOver == false)
         {
-            Debug.Log("Player Death");
-            Instantiate(properties.Explosion, transform.position, properties.Explosion.transform.rotation);
-            UIMan.OnGameOver();
-            GameOver = true;
+            Death();
         }
 	}
  
     public void TransmitPower()
     {
         if (!properties.transmission.isPlaying)
+        {
             properties.transmission.Play();
+            if (properties.FX.isPlaying)
+            {
+                properties.FX2.PlayOneShot(properties.TransitionClip);
+            }
+            else{
+                properties.FX.PlayOneShot(properties.TransitionClip);
+
+            }
+        }
     }
 
     public void RecivePower()
@@ -109,7 +121,7 @@ public class PlayerController : MonoBehaviour {
         float MaxValue = properties.TimeToPass;
         float CountDown = properties.TimeToPass;
         float Timer = 0;
-        while(CountDown > 0)
+        while (CountDown > 0)
         {
             yield return new WaitForSeconds(1);
             Timer = 1 - (CountDown / MaxValue);
@@ -119,13 +131,14 @@ public class PlayerController : MonoBehaviour {
             properties.trailRenderl.GetComponent<TrailRenderer>().startColor = Color.Lerp(OldCOlor, Color.red, Timer);
             properties.trailRenderl.GetComponent<TrailRenderer>().endColor = properties.trailRenderl.GetComponent<TrailRenderer>().startColor;
         }
-
-
-
+      //  Death();    
+    }
+    void Death(){
         Debug.Log("Player Death");
         Instantiate(properties.Explosion, transform.position, properties.Explosion.transform.rotation);
         UIMan.OnGameOver();
         GameOver = true;
+        shaker.Shake(0.7f, 4);
     }
     /*
     void OnTriggerEnter(Collider other)

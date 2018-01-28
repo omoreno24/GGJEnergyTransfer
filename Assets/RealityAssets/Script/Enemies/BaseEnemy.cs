@@ -47,7 +47,10 @@ public class BaseEnemy : Monohelper {
 
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().properties.HealthPoints -= 15;
+            PlayerController player = other.GetComponent<PlayerController>();
+            player.properties.HealthPoints -= Damage;
+            float impact = Damage /100;
+            shaker.ShakeOneShotDirectional(transform.forward.normalized, impact * 10);
         }
     }
     void KnockBack(Vector3 direction){
