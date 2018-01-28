@@ -59,7 +59,10 @@ public class PlayerController : Monohelper{
         
         if (CanShot && Input.GetButton(properties.ShootButton)){
             NockBackValue = properties.GetWeapond().Shoot();
-            movementController.AddImpact(-transform.forward,NockBackValue);
+
+            if (motion.magnitude < 0.2f)
+                movementController.AddImpact(-transform.forward,NockBackValue);
+
             motion -= motion * properties.GetWeapond().GetMovementLost();
         }
         movementController.Move(motion);
