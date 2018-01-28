@@ -24,4 +24,16 @@ public class Monohelper : MonoBehaviour
         }
     }
     private static CameeraShake _shaker;
+
+    public UIManager uiManager
+    {
+        get
+        {
+            if (_uiManager == null)
+                _uiManager = FindObjectOfType<UIManager>();
+            return _uiManager;
+        }
+    }
+    private static UIManager _uiManager;
+
 }

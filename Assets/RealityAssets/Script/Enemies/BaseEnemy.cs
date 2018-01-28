@@ -9,6 +9,7 @@ public class BaseEnemy : Monohelper {
     public float SleepTime = 0.1f;
     public float HP = 100f;
     public float Damage = 5f;
+    public int ScoreValue = 1;
 	// Use this for initialization
 	void Start () {
         Agent = GetComponent<NavMeshAgent>();
@@ -58,6 +59,7 @@ public class BaseEnemy : Monohelper {
     }
 
     void Die(){
+        uiManager.Score += ScoreValue;
         shaker.ShakeOneShot(1.5f);
         Destroy(this.gameObject);
     }

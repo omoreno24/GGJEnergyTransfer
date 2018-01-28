@@ -5,6 +5,18 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    private int _score;
+    public int Score { 
+        get{
+            return _score; 
+        }
+        set{
+            _score = value;
+            UpdateScoreBoard();
+        }
+
+    }
+    public Text ScoreText;
     public PlayerController player1;
     public PlayerController player2;
     public GameObject GameplayUI;
@@ -28,6 +40,9 @@ public class UIManager : MonoBehaviour {
             }
         }
 	}
+    public void UpdateScoreBoard(){
+        ScoreText.text = Score.ToString();
+    }
     public void OnGameOver()
     {
         GameOverUI.SetActive(true);

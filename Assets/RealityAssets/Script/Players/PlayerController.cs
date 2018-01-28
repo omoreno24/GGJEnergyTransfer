@@ -134,7 +134,7 @@ public class PlayerController : Monohelper{
             properties.trailRenderl.GetComponent<TrailRenderer>().startColor = Color.Lerp(OldCOlor, Color.red, Timer);
             properties.trailRenderl.GetComponent<TrailRenderer>().endColor = properties.trailRenderl.GetComponent<TrailRenderer>().startColor;
         }
-      //  Death();    
+        //Death();    
     }
     void Death(){
         Debug.Log("Player Death");
