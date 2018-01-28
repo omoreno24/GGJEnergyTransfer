@@ -742,6 +742,9 @@ MonoBehaviour:
   SleepTime: 2.1
   HP: 5
   Damage: 5
+  EnemyExplosion: {fileID: 1702238493717730, guid: 88cc1ee0fca19054d84009cc99861b0d,
+    type: 2}
+  _renderer: {fileID: 137552941646892326}
 --- !u!122 &122502978363047258
 Halo:
   m_ObjectHideFlags: 1

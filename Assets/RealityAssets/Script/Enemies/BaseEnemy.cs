@@ -9,6 +9,10 @@ public class BaseEnemy : Monohelper {
     public float SleepTime = 0.1f;
     public float HP = 100f;
     public float Damage = 5f;
+    public GameObject EnemyExplosion;
+
+    public Renderer _renderer;
+
 	// Use this for initialization
 	void Start () {
         Agent = GetComponent<NavMeshAgent>();
@@ -43,6 +47,9 @@ public class BaseEnemy : Monohelper {
             Vector3 dir = other.transform.position - transform.position;
             dir.Normalize();
             KnockBack(dir);
+            
+            
+            StartCoroutine("Blink");
         }
 
         if (other.CompareTag("Player"))
@@ -59,8 +66,18 @@ public class BaseEnemy : Monohelper {
 
     void Die(){
         shaker.ShakeOneShot(1.5f);
+        Instantiate(EnemyExplosion, transform.position, transform.rotation);
         Destroy(this.gameObject);
     }
 
+    IEnumerator Blink()
+    {
+        _renderer.material.SetColor("_EmissionColor", new Color(.35f, .35f, 0.35f));
+        yield return null;
+        yield return new WaitForSeconds(.03f);
+
+        _renderer.material.SetColor("_EmissionColor", Color.black);
+
+    }
 
 }
