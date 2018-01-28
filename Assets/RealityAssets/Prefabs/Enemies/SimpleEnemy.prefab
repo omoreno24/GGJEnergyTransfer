@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 195616074857148166}
   m_Layer: 0
   m_Name: SimpleEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,6 +69,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -93,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3.16, z: 1}
+  m_Size: {x: 2.28, y: 3.16, z: 1.79}
   m_Center: {x: 0, y: 1.16, z: 0}
 --- !u!114 &114422141650547720
 MonoBehaviour:
@@ -119,8 +121,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1990190418699012}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.61
-  m_Speed: 100
+  m_Radius: 1.91
+  m_Speed: 20
   m_Acceleration: 300
   avoidancePriority: 50
   m_AngularSpeed: 120

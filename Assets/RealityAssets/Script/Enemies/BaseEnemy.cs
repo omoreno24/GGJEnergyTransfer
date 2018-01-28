@@ -44,6 +44,11 @@ public class BaseEnemy : Monohelper {
             dir.Normalize();
             KnockBack(dir);
         }
+
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().properties.HealthPoints -= 15;
+        }
     }
     void KnockBack(Vector3 direction){
         Agent.velocity = (Agent.velocity - Agent.velocity) + (direction * 30);
