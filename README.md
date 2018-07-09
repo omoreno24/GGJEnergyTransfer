@@ -16,4 +16,4 @@ Rules:
 - Only the player with the Power could transfer the power. 
 - The blue electricity trail shift color to red to indicate when you will get killed by the power.
 
-Repo Instruction: **The interesting assets are under folder RealityAssets**
+Repo Instruction: **The interesting assets are under folder Assets/RealityAssets**
