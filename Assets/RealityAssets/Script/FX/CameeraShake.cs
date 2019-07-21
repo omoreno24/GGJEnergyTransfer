@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CameeraShake : MonoBehaviour {
     // Transform of the camera to shake. Grabs the gameObject's transform
@@ -18,6 +19,8 @@ public class CameeraShake : MonoBehaviour {
 
 	private Vector3 shakeDirection = Vector3.one;
 
+    public GameObject Player1;
+    public Button ButtonEvent;
 
     Vector3 originalPos;
 
@@ -88,4 +91,12 @@ public class CameeraShake : MonoBehaviour {
 
 		Shake (t, amount);
 	}
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !Player1.activeSelf)
+        {
+            ButtonEvent.onClick.Invoke();
+        }
+    }
 }

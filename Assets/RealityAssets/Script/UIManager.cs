@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour {
         }
 	}
     public void UpdateScoreBoard(){
-        ScoreText.text = Score.ToString();
+        ScoreText.text = Score.ToString("00");
     }
     public void OnGameOver()
     {
